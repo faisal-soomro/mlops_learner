@@ -1,0 +1,7 @@
+# Top-level dependencies for the fraud-detection project.
+# Edit this file; compile to requirements.txt with:
+#   uv pip compile requirements.in -o requirements.txt
+scikit-learn>=1.4,<2
+mlflow>=2.10,<3
+pandas>=2.0,<3
+numpy>=1.26,<3
