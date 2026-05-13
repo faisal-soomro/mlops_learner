@@ -1,4 +1,4 @@
-# Day 3 — Set Up a Project with `uv`
+# Day 3 — Fix a Broken `uv` Lockfile Specification
 
 ## Task
 
@@ -48,6 +48,27 @@ Read the file and check each line against the criteria. Common problems planted 
 | No constraint at all | bare `pandas` | task requires a constraint — add one |
 
 A reference [`requirements.in`](requirements.in) is in this directory.
+
+### The actual broken file from the lab
+
+```
+# requirements.in
+# Fraud detection project dependencies
+sklearn
+mlflow>=100.0
+numpy
+```
+
+Four things wrong:
+
+| Line | Problem | Fix |
+|---|---|---|
+| `sklearn` | Wrong PyPI name. `sklearn` is a deprecated stub package that now errors on install — the *import* is `sklearn` but the *PyPI package* is `scikit-learn`. Also no version constraint. | `scikit-learn>=1.4,<2` |
+| `mlflow>=100.0` | Unsatisfiable — mlflow is at ~2.x, there is no 100.0. | `mlflow>=2.10,<3` |
+| `numpy` | No version constraint (task requires one). | `numpy>=1.26,<3` |
+| *(missing)* | `pandas` not listed at all. | add `pandas>=2.0,<3` |
+
+The `sklearn`-vs-`scikit-learn` trap is worth remembering: the *import name* and the *PyPI package name* are different. If you ever see `sklearn` in a `requirements.in` or a `pyproject.toml` in real code, treat it as a bug — the stub was published years ago to redirect users, and in 2023 the maintainers made it raise an error on install to stop the confusion from propagating.
 
 ## How to run
 
