@@ -1,0 +1,6 @@
+# Placeholder — the real file is produced by `pip freeze` after running setup.sh
+# and will contain pinned versions (e.g. numpy==2.1.3) plus transitive deps.
+matplotlib
+numpy
+pandas
+scikit-learn
