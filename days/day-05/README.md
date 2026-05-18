@@ -1,4 +1,4 @@
-# Day 5 — Automate Tasks with a Makefile
+# Day 5 — Create a Makefile for ML Workflow Automation
 
 ## Task
 
