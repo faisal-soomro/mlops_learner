@@ -1,0 +1,27 @@
+[project]
+name = "fraud-detection"
+version = "0.1.0"
+requires-python = ">=3.10"
+
+# Black: opinionated formatter. Almost no knobs by design — pick a line length
+# and let it do the rest.
+[tool.black]
+line-length = 120
+# Optional but recommended: pin the syntax level black formats for. Without it,
+# black 25+ defaults to the newest Python it knows about and warns when the
+# running interpreter is older ("cannot parse code formatted for Python 3.14").
+# Set this to the Python version your CI / dev environment actually runs.
+target-version = ["py312"]
+
+# Ruff: linter (and formatter, though we use black for formatting here).
+# Top-level [tool.ruff] is for global settings (line-length, target-version,
+# include/exclude). Lint rules live under [tool.ruff.lint] from ruff 0.1+.
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+# E  — pycodestyle errors
+# F  — pyflakes (unused imports/vars, undefined names, etc.)
+# W  — pycodestyle warnings
+# I  — isort (import ordering)
+select = ["E", "F", "W", "I"]
