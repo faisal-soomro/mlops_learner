@@ -1,5 +1,7 @@
 # Day 4 — Create a Standard ML Project Structure
 
+> **Step-by-step run-through:** see [walkthrough.md](walkthrough.md). For the wider concepts (raw/processed split, `__init__.py` vs PEP 420, src/ vs flat), see [`notes/ml-project-layout.md`](../../notes/ml-project-layout.md). This README is the TL;DR.
+
 ## Task
 
 The fraud-detection project at `/root/code/fraud-detection/` doesn't match the team's standard layout. Bring it in line.

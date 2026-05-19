@@ -1,5 +1,7 @@
 # Day 5 — Create a Makefile for ML Workflow Automation
 
+> **Step-by-step run-through:** see [walkthrough.md](walkthrough.md). For the wider concepts (`.PHONY` mechanics, recipe-per-shell, the offensive-security angle), see [`notes/makefile.md`](../../notes/makefile.md). This README is the TL;DR.
+
 ## Task
 
 The team's draft Makefile at `/root/code/fraud-detection/Makefile` doesn't complete `make all`. Bring it in line with the standard.

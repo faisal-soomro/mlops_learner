@@ -36,12 +36,7 @@ These days were completed before the README/walkthrough split convention emerged
 
 ### Items
 
-- [ ] Day 1 — venv + requirements.txt (`days/day-01/walkthrough.md`)
-- [ ] Day 2 — JupyterLab config diagnosis (`days/day-02/walkthrough.md`) — when real outputs come, also extract a future `notes/binding-and-ports.md` if it doesn't exist yet
-- [ ] Day 3 — `uv pip compile` lockfile (`days/day-03/walkthrough.md`) — cross-link to `notes/python-packaging.md` "Pinning, ranges, lockfiles" section
-- [ ] Day 4 — standard ML project layout (`days/day-04/walkthrough.md`)
-- [ ] Day 5 — Makefile (`days/day-05/walkthrough.md`)
-- [ ] Day 6 — ruff + black (`days/day-06/walkthrough.md`)
+(none — all six reconstructed walkthroughs created; see Done section. Days 1-6 READMEs trimmed to TL;DR.)
 
 ### When the next person re-runs a Day 1-6 lab
 
@@ -80,3 +75,9 @@ Worth doing eventually but not enough material yet. Promote to active items when
 - `notes/makefile.md` — extracted from Day 5 README; Day 5 trimmed to link to it. (commit: f794d97)
 - `notes/code-quality.md` — extracted from Day 6 README; Day 6 trimmed to link to it. (commit: f794d97)
 - `notes/ml-project-layout.md` — extracted from Day 4 README; Day 4 trimmed to link to it. (commit: f794d97)
+- Day 1 reconstructed `walkthrough.md` + README trimmed to TL;DR. (commit: pending)
+- Day 2 reconstructed `walkthrough.md` + README trimmed to TL;DR. (commit: pending)
+- Day 3 reconstructed `walkthrough.md` + README trimmed to TL;DR. (commit: pending)
+- Day 4 reconstructed `walkthrough.md` + README walkthrough banner added. (commit: pending)
+- Day 5 reconstructed `walkthrough.md` + README walkthrough banner added. (commit: pending)
+- Day 6 reconstructed `walkthrough.md` + README walkthrough banner added. (commit: pending)

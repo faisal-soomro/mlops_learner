@@ -1,5 +1,7 @@
 # Day 6 — Set Up Code Quality Tools for ML Code
 
+> **Step-by-step run-through:** see [walkthrough.md](walkthrough.md). For the wider concepts (formatter vs linter, ruff schema migration, `per-file-ignores`, etc.), see [`notes/code-quality.md`](../../notes/code-quality.md). This README is the TL;DR.
+
 ## Task
 
 Make `/root/code/fraud-detection/` pass `ruff check src/` and `black --check src/`.
