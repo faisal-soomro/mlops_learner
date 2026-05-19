@@ -1,0 +1,82 @@
+# Backlog
+
+Outstanding work across the repo. Items here are tracked but not yet done.
+
+When you clear an item:
+
+- Strike it through and move it to **Done** at the bottom (with the commit hash), or
+- Delete it if it's superseded.
+
+Don't let this file get stale. If something here is no longer worth doing, delete it with a one-line note in the commit.
+
+## Conventions
+
+**Reconstructed walkthroughs** carry a banner at the top:
+
+> ⚠️ **Reconstructed walkthrough.** Outputs in this file are extrapolated from what the lab *would* produce, not captured from a real session. The next time someone runs this lab, replace the extrapolated outputs with the real ones. Tracked in [BACKLOG.md](../../BACKLOG.md).
+
+The banner stays until someone replaces the extrapolated outputs with a real run.
+
+---
+
+## Days 1-6 — walkthrough.md backfill
+
+These days were completed before the README/walkthrough split convention emerged (see Day 7). They need:
+
+- A `walkthrough.md` reconstructed from the day's README + general knowledge of the tools.
+- The README trimmed to TL;DR style (task + acceptance criteria + final-state recipe + key gotchas + pointers).
+- A clear banner on the walkthrough flagging the outputs as extrapolated.
+
+### Acceptance criteria (per day)
+
+- `walkthrough.md` exists, terse (steps + expected behaviour, no fabricated terminal outputs that look real).
+- Banner present at top of `walkthrough.md`.
+- README trimmed to TL;DR, with pointers to walkthrough.md and any relevant notes/ file.
+- BACKLOG item for that day moved to Done.
+
+### Items
+
+- [ ] Day 1 — venv + requirements.txt (`days/day-01/walkthrough.md`)
+- [ ] Day 2 — JupyterLab config diagnosis (`days/day-02/walkthrough.md`) — when real outputs come, also extract a future `notes/binding-and-ports.md` if it doesn't exist yet
+- [ ] Day 3 — `uv pip compile` lockfile (`days/day-03/walkthrough.md`) — cross-link to `notes/python-packaging.md` "Pinning, ranges, lockfiles" section
+- [ ] Day 4 — standard ML project layout (`days/day-04/walkthrough.md`)
+- [ ] Day 5 — Makefile (`days/day-05/walkthrough.md`)
+- [ ] Day 6 — ruff + black (`days/day-06/walkthrough.md`)
+
+### When the next person re-runs a Day 1-6 lab
+
+Replace the extrapolated outputs with the real ones, remove the reconstructed banner, and tick the item off this list. Commit message should mention that the walkthrough has been verified against a real lab run.
+
+---
+
+## notes/ extractions from earlier days
+
+Topical content that's currently buried in a single day's README/walkthrough and would be better placed in `notes/` where it can grow across days.
+
+### Acceptance criteria (per file)
+
+- New `notes/<topic>.md` exists, with a Contents TOC.
+- Content extracted from the source day(s) without losing anything.
+- The source day's README now links to the note instead of duplicating the content.
+- `notes/README.md` index updated.
+
+### Items
+
+- [ ] **`notes/code-quality.md`** — extract from Day 6. Formatter vs linter, the ruff 0.1+ schema migration (`[tool.ruff.lint]`), `target-version` warning, per-file-ignores, `# noqa` specificity, ruff vs black overlap and where the ecosystem is heading.
+- [ ] **`notes/makefile.md`** — extract from Day 5. `.PHONY` mechanics, the file-existence-check, the three offensive-security patterns (silent test suppression, recipe injection, untrusted source trees) with PoCs, recipe-vs-shell semantics (`source` doesn't work, `:=` vs `=`).
+- [ ] **`notes/ml-project-layout.md`** — extract from Day 4. The standard `data/raw`, `data/processed`, `src/{data,features,models,utils}`, `tests/`, `configs/` shape and what each is for. Cross-link to `notes/python-packaging.md` for the src/ vs flat layout discussion.
+
+---
+
+## Held — extract when more material accrues
+
+Worth doing eventually but not enough material yet. Promote to active items when the second relevant day lands.
+
+- **`notes/binding-and-ports.md`** (Day 2 + Domain 7 model serving). 0.0.0.0 vs 127.0.0.1 vs hostname, port collisions, `ss -tlnp`, the reverse-proxy pattern. Promote when Day 57 (Flask) or Day 58 (FastAPI) lands.
+- **`notes/python-environments.md`** (Day 1 + Day 3). `venv` vs `virtualenv` vs `conda` vs `uv venv`. Promote when something new touches the topic.
+
+---
+
+## Done
+
+(none yet — newly created list)

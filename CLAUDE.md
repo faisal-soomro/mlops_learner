@@ -83,6 +83,24 @@ When a discussion after a task uncovers something that *isn't* about today's lab
 
 Every file in `notes/` opens with a **Contents** section linking to each `##` heading. Update the TOC whenever a new section is added or a heading is renamed — out-of-date TOCs are worse than missing ones.
 
+### Reconstructed walkthroughs
+
+For days completed before the README/walkthrough split convention existed (Days 1-6), `walkthrough.md` may be *reconstructed* — written from the README + general knowledge of the tool, not from a captured session. These files open with this banner:
+
+> ⚠️ **Reconstructed walkthrough.** Outputs in this file are extrapolated from what the lab *would* produce, not captured from a real session. The next time someone runs this lab, replace the extrapolated outputs with the real ones. Tracked in [BACKLOG.md](../../BACKLOG.md).
+
+Rules for writing them:
+
+- **Terse, not best-guess.** Show the *steps* and expected *behaviour* ("the build should succeed; the wheel filename should match X"). Don't fabricate terminal outputs that look like they came from a real session — that's worse than no outputs because it looks authoritative when it isn't.
+- **Banner stays** until someone replaces the extrapolated content with a real run.
+- Every reconstructed walkthrough has a matching entry in `BACKLOG.md`.
+
+### BACKLOG.md
+
+Outstanding work tracked at the repo root. Items grouped by category (per-day backfill, notes/ extractions, held-for-later). When clearing an item, move it to the **Done** section with the commit hash.
+
+Don't accumulate items indefinitely — if something stops being worth doing, delete it with a one-line note in the commit.
+
 ### Don't rush to commit — discuss first
 
 After a task passes, **do not auto-commit**. The discussion of what happened, what was learned, and what should be captured in `walkthrough.md` is the most valuable part of the day — committing closes that window prematurely.
