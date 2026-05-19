@@ -12,19 +12,9 @@ Make `/root/code/fraud-detection/` pass `ruff check src/` and `black --check src
 
 ## Why this matters
 
-Two different tools doing two different jobs, both needed:
+`black` formats; `ruff` lints. Both belong in CI because they catch different classes of problem — a formatter can't tell you `import os` is unused, and a linter doesn't standardise where line breaks fall. For ML code (notebooks-turned-scripts, full of unused imports and inconsistent indentation), the auto-fix is especially valuable.
 
-- **`black`** is a *formatter*. It rewrites code to a canonical style — line breaks, quotes, spacing, trailing commas. It has effectively zero knobs, by design. The whole pitch is "stop arguing about style; commit the diff." `black --check` exits non-zero if any file would change.
-- **`ruff`** is a *linter* (and a fast one — Rust). It looks for actual bugs and lint smells: unused imports (`F401`), undefined names (`F821`), unused variables (`F841`), bad import ordering (`I001`), things that flake8 + isort + pylint would catch, but in one pass and roughly 100× faster. Ruff *can* also format, but on this project black is the formatter and ruff is the linter — same separation most teams use today.
-
-Why have both in CI? Because they catch different classes of problem:
-
-- A formatter cannot tell you `import os` is unused — that's a lint check.
-- A linter does not standardise where line breaks fall in long function signatures — that's a formatter's job.
-
-Running both on every PR gives you a stable, mechanical floor of code quality. Reviewers stop nitpicking whitespace and start reviewing logic. New contributors get one canonical style without reading a 40-page style guide.
-
-For ML code specifically: notebooks-turned-scripts are *full* of unused imports (the leftovers from "let me just try this"), `import *`, and inconsistent indentation. `ruff` + `black` clean those up automatically before anyone reads the diff.
+For the cross-cutting writeup — formatter vs linter, the ruff 0.1+ schema migration, per-file-ignores, `# noqa` specificity, `target-version` warning, ruff/black overlap — see [`notes/code-quality.md`](../../notes/code-quality.md). The sections below focus on this lab.
 
 ## Use case
 
@@ -94,14 +84,13 @@ If both exit 0, you're done. CI will agree.
 
 ## Notes & gotchas
 
-- **`[tool.ruff.lint]` is the ruff 0.1+ schema.** Pre-0.1 used `[tool.ruff]` with `select`. Ruff still reads the old form but warns. The lab grader expects the new form.
-- **Don't enable every ruff rule.** `select = ["ALL"]` is a footgun — it includes mutually contradictory rules and stylistic choices most teams reject. Start with `E F W I` (the task's choice), add specific codes as the team agrees on them.
-- **`per-file-ignores` for tests and notebooks.** Tests often want `assert` (ruff `S101`), long lines for parametrised fixtures, and unused fixtures (ruff `ARG`). Notebooks-as-scripts want `E402` (imports not at top). Configure via `[tool.ruff.lint.per-file-ignores]` rather than scattering `# noqa` comments.
-- **Black version pinning.** Black is deliberately opinionated and occasionally changes formatting between versions. Pin the version in `requirements.txt` (or `pyproject.toml` dev deps) so CI and devs format identically. Same applies to ruff, though ruff is more disciplined about backward compatibility.
-- **Black target-version warning.** If you see `Warning: Python 3.X cannot parse code formatted for Python 3.Y`, the run still succeeded — black just couldn't run its post-format AST safety check because the running interpreter is older than the (inferred) target version. Pin `target-version = ["py312"]` (or whatever you actually run) under `[tool.black]` to silence it and make the safety check run.
-- **`# noqa` is a last resort.** If a real lint hit needs to be silenced, write `# noqa: F401` (specific code), not bare `# noqa`. The latter silences everything and never expires.
-- **`ruff format` vs `black`.** Ruff now ships a formatter that is ~99% black-compatible. Many teams have migrated to ruff-only. The lab keeps both because that's what most teams *currently* run; expect this to consolidate over the next year or two.
-- **Pre-commit hooks.** Day 8 will wire these tools to run automatically on `git commit`. For now, run them by hand or via `make lint`.
+Lab-specific:
+
+- **`[tool.ruff.lint]` is the ruff 0.1+ schema** — the grader expects the new form, not the deprecated top-level `select`.
+- **`select = ["E", "F", "W", "I"]`** — exactly those four codes. Don't expand to `["ALL"]`.
+- **Day 8 will wire these to pre-commit hooks.** For now, run by hand or via `make lint`.
+
+Cross-cutting context — formatter vs linter, the ruff schema migration, `per-file-ignores`, `# noqa` specificity, the `target-version` warning, pinning, and the ruff/black trajectory — lives in [`notes/code-quality.md`](../../notes/code-quality.md).
 
 ## Resources
 

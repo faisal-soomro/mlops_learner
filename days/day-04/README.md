@@ -32,17 +32,9 @@ fraud-detection/
 
 ## Why this matters
 
-A consistent layout is the cheapest piece of MLOps infrastructure you can buy. It pays off every time someone new opens the repo — and it makes the rest of the course easier, because every later tool (DVC, MLflow, Docker, CI) expects to find things in predictable places.
+A consistent layout is the cheapest piece of MLOps infrastructure you can buy: a new joiner finds things in minutes, and every later tool (DVC, MLflow, Docker, CI) assumes the standard shape.
 
-The structure encodes three separations that matter:
-
-- **Raw vs processed data.** `data/raw/` is *immutable input* — never edit, never overwrite. `data/processed/` is *derived output* — regenerable from `raw/` + code. This split is the precondition for reproducibility: if `processed/` is lost, you can rebuild it; if `raw/` is lost, you have a real problem. Later, DVC will track both and assume this split.
-- **Code vs notebooks.** `src/` is the library — importable, testable, version-controlled, reviewed. `notebooks/` is exploration — messy, throwaway, useful for plots and one-off analysis. Logic that matters migrates from `notebooks/` to `src/` when it stops being exploratory.
-- **Code by lifecycle stage.** `src/data/` (loading, cleaning), `src/features/` (feature engineering), `src/models/` (training, evaluation), `src/utils/` (cross-cutting helpers). Not the only way to slice it, but matches the stages of an ML pipeline so people can find things by intent.
-
-`__init__.py` (even empty) marks a directory as a Python *package* — meaning `from src.models.train import train_model` works. Without it, modern Python will treat the directory as a "namespace package", which often works but breaks in subtle ways (tooling that walks packages, editable installs, some test runners). Always include the file.
-
-`configs/` separates *what to run* from *how to run it*. Hyperparameters, data paths, model names — all in YAML/JSON, not hardcoded. Day 32 will lean on this when we wire training to a YAML config.
+For the cross-cutting writeup — what each directory is for, `raw/` vs `processed/` reproducibility, `__init__.py` vs namespace packages, `src/` vs flat layout — see [`notes/ml-project-layout.md`](../../notes/ml-project-layout.md). The sections below focus on this lab.
 
 ## Use case
 
@@ -147,11 +139,14 @@ head -1 README.md   # must print: # fraud-detection
 
 ## Notes & gotchas
 
-- **Don't delete `data/raw/` casually.** Even if it looks empty in the lab, the convention is that raw data is sacred. If the lab grader checks the layout but the project later receives real data, an empty `raw/` directory is fine; a missing one breaks scripts that `open("data/raw/...")`.
-- **`__init__.py` vs namespace packages.** Python 3.3+ allows packages without `__init__.py` (PEP 420). They mostly work, but explicit `__init__.py` files are still the safer default — every linter, test runner, and packaging tool understands them; not all understand namespace packages.
-- **`src/` layout vs flat layout.** Some Python projects put package code directly at the repo root (flat layout). The `src/` layout (used here) prevents accidental imports from a half-installed package and forces you to install the project before importing it. For an ML project this is overkill for now but standard once you start packaging (Day 7).
-- **`requirements.txt` here is a *spec*, not a lockfile.** Day 3 produced a pinned lockfile via `uv pip compile`. Day 4's requirements.txt is the loose, hand-edited spec — same role as `requirements.in`. The task asks for unpinned names, which is fine for the layout exercise; in a real project you'd still compile this to a lockfile.
-- **Don't put data in git.** `data/raw/` and `data/processed/` should be gitignored. DVC (Days 10–19) handles the actual data versioning.
+Lab-specific:
+
+- **The rename trap.** `mkdir -p src/features` does *not* delete `src/feature`. Use `mv src/feature src/features` to rename.
+- **`requirements.txt` here is a spec, not a lockfile.** The task asks for unpinned names; that's fine for the layout exercise. Day 3 covered the pinned lockfile via `uv pip compile`.
+- **The four required deps are exactly `scikit-learn`, `pandas`, `numpy`, `mlflow`** — one per line, canonical PyPI name `scikit-learn` (not `sklearn`).
+- **README first line must be `# fraud-detection`** — the grader checks `head -1`.
+
+Cross-cutting context — `raw/` vs `processed/`, `__init__.py` vs PEP 420 namespace packages, `src/` vs flat layout — lives in [`notes/ml-project-layout.md`](../../notes/ml-project-layout.md).
 
 ## Resources
 

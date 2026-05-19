@@ -62,9 +62,7 @@ Topical content that's currently buried in a single day's README/walkthrough and
 
 ### Items
 
-- [ ] **`notes/code-quality.md`** — extract from Day 6. Formatter vs linter, the ruff 0.1+ schema migration (`[tool.ruff.lint]`), `target-version` warning, per-file-ignores, `# noqa` specificity, ruff vs black overlap and where the ecosystem is heading.
-- [ ] **`notes/makefile.md`** — extract from Day 5. `.PHONY` mechanics, the file-existence-check, the three offensive-security patterns (silent test suppression, recipe injection, untrusted source trees) with PoCs, recipe-vs-shell semantics (`source` doesn't work, `:=` vs `=`).
-- [ ] **`notes/ml-project-layout.md`** — extract from Day 4. The standard `data/raw`, `data/processed`, `src/{data,features,models,utils}`, `tests/`, `configs/` shape and what each is for. Cross-link to `notes/python-packaging.md` for the src/ vs flat layout discussion.
+(none — all three notes extractions cleared; see Done section.)
 
 ---
 
@@ -79,4 +77,6 @@ Worth doing eventually but not enough material yet. Promote to active items when
 
 ## Done
 
-(none yet — newly created list)
+- `notes/makefile.md` — extracted from Day 5 README; Day 5 trimmed to link to it. (commit: pending)
+- `notes/code-quality.md` — extracted from Day 6 README; Day 6 trimmed to link to it. (commit: pending)
+- `notes/ml-project-layout.md` — extracted from Day 4 README; Day 4 trimmed to link to it. (commit: pending)
