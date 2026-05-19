@@ -77,6 +77,6 @@ Worth doing eventually but not enough material yet. Promote to active items when
 
 ## Done
 
-- `notes/makefile.md` — extracted from Day 5 README; Day 5 trimmed to link to it. (commit: pending)
-- `notes/code-quality.md` — extracted from Day 6 README; Day 6 trimmed to link to it. (commit: pending)
-- `notes/ml-project-layout.md` — extracted from Day 4 README; Day 4 trimmed to link to it. (commit: pending)
+- `notes/makefile.md` — extracted from Day 5 README; Day 5 trimmed to link to it. (commit: f794d97)
+- `notes/code-quality.md` — extracted from Day 6 README; Day 6 trimmed to link to it. (commit: f794d97)
+- `notes/ml-project-layout.md` — extracted from Day 4 README; Day 4 trimmed to link to it. (commit: f794d97)
