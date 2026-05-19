@@ -1,0 +1,17 @@
+# Build backend: setuptools reads [project] (PEP 621) and produces a wheel.
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+# Distribution name. Must match the importable module path under src/.
+name = "fraud_detection"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = ["scikit-learn", "pandas", "numpy"]
+
+# src-layout: tell setuptools where to find packages. Optional with modern
+# setuptools (auto-discovery handles single-package src/ layouts) but
+# explicit beats implicit, especially when CI runs older setuptools.
+[tool.setuptools.packages.find]
+where = ["src"]
