@@ -81,4 +81,4 @@ Use this section **only** when a topic genuinely doesn't have enough material to
 - Day 4 reconstructed `walkthrough.md` + README walkthrough banner added. (commit: d11af07)
 - Day 5 reconstructed `walkthrough.md` + README walkthrough banner added. (commit: d11af07)
 - Day 6 reconstructed `walkthrough.md` + README walkthrough banner added. (commit: d11af07)
-- `notes/pre-commit.md` — extracted from Day 8. (commit: pending)
+- `notes/pre-commit.md` — extracted from Day 8. (commit: c987bf1)
