@@ -6,14 +6,14 @@ A structured, hands-on roadmap to learn MLOps from scratch. One task per day, 12
 
 ## Domain 1: ML Project Setup (Days 1–9)
 
-- [ ] **Day 1** — Create a Python Virtual Environment
-- [ ] **Day 2** — Launch a Jupyter Notebook
-- [ ] **Day 3** — Set Up a Project with uv
-- [ ] **Day 4** — Organize an ML Project Structure
-- [ ] **Day 5** — Automate Tasks with a Makefile
-- [ ] **Day 6** — Add Code Quality Tools (ruff, mypy)
-- [ ] **Day 7** — Package a Python ML Project
-- [ ] **Day 8** — Set Up Pre-commit Hooks
+- [x] **Day 1** — Create a Python Virtual Environment
+- [x] **Day 2** — Launch a Jupyter Notebook
+- [x] **Day 3** — Set Up a Project with uv
+- [x] **Day 4** — Organize an ML Project Structure
+- [x] **Day 5** — Automate Tasks with a Makefile
+- [x] **Day 6** — Add Code Quality Tools (ruff, mypy)
+- [x] **Day 7** — Package a Python ML Project
+- [x] **Day 8** — Set Up Pre-commit Hooks
 - [ ] **Day 9** — Scaffold a Project with Cookiecutter
 
 ## Domain 2: DVC — Data Version Control (Days 10–19)

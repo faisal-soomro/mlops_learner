@@ -63,7 +63,7 @@ Topical content that's currently buried in a single day's README/walkthrough and
 
 ## Held — extract when more material accrues
 
-Worth doing eventually but not enough material yet. Promote to active items when the second relevant day lands.
+Use this section **only** when a topic genuinely doesn't have enough material to write usefully yet — e.g. a single line in one lab. Default Phase-3 behaviour is to extract the note now, from a single day, if there's enough conceptual surface to stand on its own (the existing `notes/makefile.md`, `notes/code-quality.md`, `notes/pre-commit.md`, etc. were all extracted from one day each). "Wait for a second day" is the exception, not the rule.
 
 - **`notes/binding-and-ports.md`** (Day 2 + Domain 7 model serving). 0.0.0.0 vs 127.0.0.1 vs hostname, port collisions, `ss -tlnp`, the reverse-proxy pattern. Promote when Day 57 (Flask) or Day 58 (FastAPI) lands.
 - **`notes/python-environments.md`** (Day 1 + Day 3). `venv` vs `virtualenv` vs `conda` vs `uv venv`. Promote when something new touches the topic.
@@ -81,3 +81,4 @@ Worth doing eventually but not enough material yet. Promote to active items when
 - Day 4 reconstructed `walkthrough.md` + README walkthrough banner added. (commit: d11af07)
 - Day 5 reconstructed `walkthrough.md` + README walkthrough banner added. (commit: d11af07)
 - Day 6 reconstructed `walkthrough.md` + README walkthrough banner added. (commit: d11af07)
+- `notes/pre-commit.md` — extracted from Day 8. (commit: pending)

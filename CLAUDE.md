@@ -53,22 +53,37 @@ git config user.email "h.faisalsoomro@gmail.com"
 
 **Hard constraint:** lab tasks are timed (60 minutes). During the task, optimise for *passing*, not for pedagogy. Save the deep explanation for after the grader is green.
 
-Two-phase workflow:
+**Artifact timing:** each lab artifact has a specific time it's created.
 
-**Phase 1 — during the task (fast):**
-- Give a *compact* diagnosis (the table, the bullet list — what's wrong and what to change).
-- The user edits and runs. Minimal back-and-forth.
+| Artifact | When |
+|---|---|
+| `days/day-XX/` directory + `README.md` (TL;DR) + reference config files | **At lab start, before any chat diagnosis.** This is the user's study sheet *during* the lab. |
+| `days/day-XX/walkthrough.md` | Built collaboratively *during* the lab; finalised on grader green. |
+| `notes/<topic>.md` extractions | After grader green and commit, as follow-up. |
+
+Three-phase workflow:
+
+**Phase 1 — lab start (immediately, before any diagnosis chat):**
+- Create `days/day-XX/README.md` with the TL;DR: task statement, acceptance criteria, target final-state (the corrected config / code), run commands, key gotchas, resources. Same content that would otherwise get blurted in chat — but in the file, not the chat.
+- Drop reference files showing the correct final shape (`pyproject.toml`, `.pre-commit-config.yaml`, `Makefile`, etc.).
+- This file is reference material the user reads alongside the chat.
+
+**Phase 2 — lab in progress (chat is step-by-step, walkthrough is WIP):**
+- In chat, walk through one diagnostic step at a time. Wait for the user's response before moving on. **Do not blurt the full diagnosis in chat** — it's already in the README for reference.
+- Start `walkthrough.md` as a WIP — capture actual outputs, surprises, the order in which errors surfaced, gotchas hit.
 - Only stop to teach if the user hits a real wall — otherwise keep moving.
-- Reference files in `days/day-XX/` are fine to look at once during the task, for sanity-checking. Don't make the user derive every edit from scratch under the clock.
+- Before declaring "looks done," cross-check the final state against every acceptance-criterion bullet. Tool silence ≠ grader pass — a grader can check things tools never complain about (exact URLs, file presence, version pins).
 
-**Phase 2 — after the task passes (deep):**
-- Capture what just happened in `days/day-XX/walkthrough.md`: the actual outputs, what each step proved, the gotchas hit along the way, the "I'd want to remember this six months from now" notes.
-- This is where the long-form explanation lives — PEP refs, why the tool behaves a certain way, what the lesson generalises to.
-- The README stays as the canonical "what is this day, how to run it, resources."
+**Phase 3 — after grader green (deep, slow):**
+1. **Pause.** Acknowledge the pass, don't propose commits.
+2. **Discuss.** Ask what surprised the user, what's worth digging into, what should land in `walkthrough.md`. Let the user drive.
+3. **Finalise `walkthrough.md`** with the captured run — the long-form "when I first ran this it said Y, which surprised me because Z" narrative, PEP refs, the why-the-tool-behaves-this-way explanations.
+4. **Promote cross-cutting takeaways to `notes/<topic>.md`.** *Default to extracting* whenever the day produced enough conceptual material to stand on its own as a note — don't wait for a "second day." Defer (`BACKLOG.md` Held) only if there genuinely isn't enough material yet. Wire the new note into `notes/README.md` index and link it from the day's README + walkthrough.
+5. **Tick the day's box in the root `README.md`** — `- [ ]` → `- [x]`.
+6. **Update `BACKLOG.md`** if any items were cleared, promoted, or newly added today.
+7. **Commit only when the user explicitly says so.** After commit, replace `pending` hashes in BACKLOG with the real hash.
 
-In other words: **be a fast assistant during the lab; be a thorough teacher after.** Don't trade one for the other.
-
-When writing instructions during a task: prefer "here's what's wrong, edit these N lines, then run X" over "now look at the output and tell me what you see." When writing `walkthrough.md` after: the slow narrative ("when I first ran this it said Y, which surprised me because Z") is exactly what's wanted.
+In other words: **README and reference files exist from minute one; chat is interactive teaching; walkthrough is the post-hoc narrative; notes are the cross-cutting extracts.** Don't conflate them.
 
 ### Where things live: days/ vs notes/
 
