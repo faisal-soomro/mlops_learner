@@ -82,4 +82,4 @@ Use this section **only** when a topic genuinely doesn't have enough material to
 - Day 5 reconstructed `walkthrough.md` + README walkthrough banner added. (commit: d11af07)
 - Day 6 reconstructed `walkthrough.md` + README walkthrough banner added. (commit: d11af07)
 - `notes/pre-commit.md` — extracted from Day 8. (commit: c987bf1)
-- Day 9 lab (cookiecutter template) + `notes/jinja2.md`. (commit: pending)
+- Day 9 lab (cookiecutter template) + `notes/jinja2.md` + `projects/` scaffold. (commit: 726b2f4)
