@@ -1,0 +1,6 @@
+{
+    "project_name": "my-ml-project",
+    "author": "xFusionCorp",
+    "python_version": "3.11",
+    "ml_framework": ["sklearn", "pytorch", "tensorflow"]
+}

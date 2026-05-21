@@ -48,6 +48,7 @@ git config user.email "h.faisalsoomro@gmail.com"
 - Keep it practical — runnable code over theory
 - When a day depends on earlier work, reference it explicitly (e.g. "uses the DVC pipeline from day-19") rather than copying code
 - Mark progress by checking off the box in the root `README.md` when a day's acceptance criteria are met
+- **Real-world projects live in `projects/<project-name>/`** — longer-arc work synthesising multiple days (typically the end of a domain). See `projects/README.md` for the convention. Projects run *alongside* daily labs, not after them.
 
 ### Teaching style — pass the task fast, learn deeply after
 
@@ -63,8 +64,12 @@ git config user.email "h.faisalsoomro@gmail.com"
 
 Three-phase workflow:
 
-**Phase 1 — lab start (immediately, before any diagnosis chat):**
-- Create `days/day-XX/README.md` with the TL;DR: task statement, acceptance criteria, target final-state (the corrected config / code), run commands, key gotchas, resources. Same content that would otherwise get blurted in chat — but in the file, not the chat.
+**Phase 1 — lab start (after seeing the broken state):**
+- **Wait for the user to share the lab's relevant files first** — the broken `cookiecutter.json`, the broken `pyproject.toml`, the broken `Makefile`, whatever the lab planted. Ask for them if not provided. Do not create Phase 1 artifacts purely from the task description, because:
+  - the diagnosis table is more accurate when it points at *real* plants, not generic possibilities;
+  - the reference files match the lab's actual shape (e.g. an outer template README, an unexpected subdirectory, a particular pin format);
+  - any "this case is unusual" detail that only shows up on inspection lands in the README on first write rather than as a later correction.
+- Once the broken state is in hand, create `days/day-XX/README.md` with the TL;DR: task statement, acceptance criteria, target final-state (the corrected config / code), run commands, **diagnosis table grounded in the actual issues**, key gotchas, resources. Same content that would otherwise get blurted in chat — but in the file, not the chat.
 - Drop reference files showing the correct final shape (`pyproject.toml`, `.pre-commit-config.yaml`, `Makefile`, etc.).
 - This file is reference material the user reads alongside the chat.
 

@@ -2,6 +2,13 @@
 
 A structured, hands-on roadmap to learn MLOps from scratch. One task per day, 12 domains, building up to a full production ML system.
 
+## Repo layout
+
+- [`days/`](days/) — one directory per day, with the lab README, walkthrough, and reference files.
+- [`notes/`](notes/) — cross-cutting concepts (Python packaging, Jinja2, pre-commit, etc.) that span multiple days.
+- [`projects/`](projects/) — real-world use cases built alongside the daily labs; longer-arc work that synthesises multiple days into something that does a thing. See [`projects/README.md`](projects/README.md).
+- [`BACKLOG.md`](BACKLOG.md) — outstanding work tracked at the repo root.
+
 ---
 
 ## Domain 1: ML Project Setup (Days 1–9)
@@ -14,7 +21,7 @@ A structured, hands-on roadmap to learn MLOps from scratch. One task per day, 12
 - [x] **Day 6** — Add Code Quality Tools (ruff, mypy)
 - [x] **Day 7** — Package a Python ML Project
 - [x] **Day 8** — Set Up Pre-commit Hooks
-- [ ] **Day 9** — Scaffold a Project with Cookiecutter
+- [x] **Day 9** — Scaffold a Project with Cookiecutter
 
 ## Domain 2: DVC — Data Version Control (Days 10–19)
 
