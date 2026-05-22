@@ -25,7 +25,7 @@ A structured, hands-on roadmap to learn MLOps from scratch. One task per day, 12
 
 ## Domain 2: DVC — Data Version Control (Days 10–19)
 
-- [ ] **Day 10** — Install and Initialize DVC
+- [x] **Day 10** — Install and Initialize DVC
 - [ ] **Day 11** — Track a Dataset with DVC
 - [ ] **Day 12** — Configure DVC Remote Storage
 - [ ] **Day 13** — Pull Data from Remote
