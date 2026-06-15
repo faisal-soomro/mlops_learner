@@ -9,6 +9,18 @@ A structured, hands-on roadmap to learn MLOps from scratch. One task per day, 12
 - [`projects/`](projects/) — real-world use cases built alongside the daily labs; longer-arc work that synthesises multiple days into something that does a thing. See [`projects/README.md`](projects/README.md).
 - [`BACKLOG.md`](BACKLOG.md) — outstanding work tracked at the repo root.
 
+## Companion study resources
+
+External courses that cover overlapping ground. Not prerequisites — use them as conceptual primers before a domain, or as alternative explanations when something isn't clicking.
+
+| Resource | Style | Best used for |
+|---|---|---|
+| [Gourav Shah — Ultimate MLOps Bootcamp](https://schoolofdevops.com/programs/mlops-bootcamp/) ([Udemy](https://www.udemy.com/course/devops-to-mlops-bootcamp/)) | Project-driven (one regression project, end-to-end on K8s) | Deploy/runtime side: Docker, K8s, HPA/KEDA, ArgoCD, Prometheus/Grafana (Domains 6, 8, 9, 11) |
+| [Made With ML — Goku Mohandas](https://madewithml.com/courses/mlops/) | Project-driven (BERT fine-tuning, distributed training) | GPU/distributed concerns, modern NLP ops — closer shape to a homelab LLM capstone |
+| [DataCamp — MLOps Fundamentals](https://www.datacamp.com/tracks/mlops-fundamentals) + [ML Engineer track](https://www.datacamp.com/tracks/machine-learning-engineer) | In-browser exercises, concept-heavy | Quick conceptual primers before MLflow (Domain 3), monitoring (Domain 8), CI/CD (Domain 9) |
+
+This roadmap is broader than any single one of them — it explicitly covers DVC, Feast, Great Expectations, Argo Workflows, and HPO that the others skip — but they go deeper on the parts they pick.
+
 ---
 
 ## Domain 1: ML Project Setup (Days 1–9)
