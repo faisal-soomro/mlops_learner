@@ -40,7 +40,7 @@ This roadmap is broader than any single one of them — it explicitly covers DVC
 - [x] **Day 10** — Install and Initialize DVC
 - [x] **Day 11** — Track a Dataset with DVC
 - [x] **Day 12** — Configure DVC Remote Storage
-- [ ] **Day 13** — Pull Data from Remote
+- [x] **Day 13** — Pull Data from Remote
 - [ ] **Day 14** — Build a DVC Pipeline
 - [ ] **Day 15** — Parameterize a DVC Pipeline
 - [ ] **Day 16** — Track Metrics with DVC
