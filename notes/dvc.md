@@ -12,6 +12,7 @@ Cross-cutting DVC concepts that surface across multiple labs in Domain 2 (Days 1
 - [Credentials and `.dvc/config.local`](#credentials-and-dvcconfiglocal)
 - [The git/DVC handoff pattern](#the-gitdvc-handoff-pattern)
 - [Don't hand-edit `.dvc/config`](#dont-hand-edit-dvcconfig)
+- [Pipelines — `dvc.yaml` and `dvc.lock`](#pipelines--dvcyaml-and-dvclock)
 - [Where each thing lives](#where-each-thing-lives)
 
 ## The mental model
@@ -153,6 +154,99 @@ Use `dvc remote add / modify / default` to mutate config. Same discipline as `gi
 
 Read the file all you want; mutate via the CLI.
 
+## Pipelines — `dvc.yaml` and `dvc.lock`
+
+`dvc add` (Days 11-13) versions individual files. `dvc.yaml` versions **the relationship between files** — a content-hashed DAG where each node is a stage (a command), each edge is a dep/output relationship, and re-running is staleness-driven.
+
+### Shape of `dvc.yaml`
+
+```yaml
+stages:
+  process_data:
+    cmd: python src/data/process_data.py
+    deps:
+      - data/raw/transactions.csv
+      - src/data/process_data.py
+    outs:
+      - data/processed/clean_transactions.csv
+
+  split_data:
+    cmd: python src/data/split_data.py
+    deps:
+      - data/processed/clean_transactions.csv    # ← this line wires the DAG edge
+      - src/data/split_data.py
+    outs:
+      - data/processed/train.csv
+      - data/processed/test.csv
+```
+
+Each stage declares:
+- **`cmd`** — the literal shell command DVC will run
+- **`deps`** — files whose changes should trigger this stage to re-run (input data, scripts, params)
+- **`outs`** — files this stage produces (DVC auto-tracks these, no `dvc add` needed)
+
+### The DAG is built from deps + outs
+
+DVC builds the dependency graph by matching: if stage B has a `dep` whose path matches another stage's `outs`, B depends on that stage. That's the *only* way DVC knows two stages are connected. **Missing a dep doesn't error at runtime** — DVC will happily run both stages in YAML-declaration order on first `dvc repro`. The breakage is silent: `dvc status` won't flag downstream stages as stale when upstream inputs change.
+
+Inspect the DAG with:
+
+```bash
+dvc dag                # ASCII art
+dvc dag --dot          # Graphviz format
+dvc dag <stage>        # dag for just one stage and its ancestors
+```
+
+Look for disconnected nodes — if two stages should be wired and aren't, you've found a missing dep.
+
+### `dvc.lock` — the hash manifest
+
+`dvc repro` writes a `dvc.lock` file capturing the actual MD5 of every dep and out of every stage at the time of the last successful run. It's how DVC decides what's stale:
+
+- On the next `dvc repro`, for each stage:
+  1. Compute the current MD5 of every dep
+  2. Compare against `dvc.lock`
+  3. If all match → stage is fresh, skip
+  4. If any differ → stage is stale, re-run, then update `dvc.lock`
+
+This is hash-based staleness, not timestamp-based. `touch` won't invalidate anything; an actual content change will.
+
+**Commit `dvc.lock` alongside `dvc.yaml`.** Without it, "reproducible" stops being reproducible — teammates would re-run everything from scratch.
+
+### `dvc repro` execution model
+
+- Computes the full DAG from `dvc.yaml`
+- Topologically orders the stages
+- For each stage in order: checks dep hashes against `dvc.lock`; skips if matched, runs if not
+- Each stage's `outs` are placed under DVC's control (cache + working tree)
+- Updates `dvc.lock` as it goes
+
+Useful flags:
+- `dvc repro --force` — re-run everything regardless of staleness
+- `dvc repro <stage>` — run a specific stage and its ancestors
+- `dvc repro --downstream <stage>` — run a stage and its descendants
+- `dvc repro --dry` — show what would run without running
+
+### `dvc.yaml` vs `.dvc/config` — different mutability models
+
+| File | Hand-edit OK? | CLI helper |
+|---|---|---|
+| `.dvc/config` | No — too easy to typo section headers | `dvc remote add/modify/default` |
+| `dvc.yaml` | Yes — the standard workflow | `dvc stage add` (only creates new stages, not edits existing) |
+
+For pipelines you edit the YAML by hand. Indentation matters (it's YAML); two-space, consistent throughout.
+
+### Failure modes seen in labs
+
+| Symptom | Root cause |
+|---|---|
+| `python: can't open file '<path>'` | Typo in `cmd` (wrong script path) |
+| `output '<path>' does not exist` (after stage ran fine) | `outs` filename mismatch with what the script actually wrote |
+| `dvc dag` shows disconnected stages; `dvc status` clean despite upstream change | Missing `dep` wiring between stages — silent breakage |
+| `Stage '<X>' didn't change, skipping` when you expected a re-run | `dvc.lock` matches; either nothing actually changed, or the changed file isn't in `deps` |
+
+The third one is the pernicious one: the pipeline produces correct outputs on first run, and only breaks on the second run after upstream data changes. Always check `dvc dag` after defining stages.
+
 ## Where each thing lives
 
 | Concept | Filesystem location | Committed? |
@@ -163,4 +257,6 @@ Read the file all you want; mutate via the CLI.
 | Runtime scratch | `.dvc/tmp/` | ❌ no |
 | Pointer files | `<dir>/<file>.dvc` | ✅ yes |
 | Per-dir gitignores | `<dir>/.gitignore` | ✅ yes |
+| Pipeline definition | `dvc.yaml` | ✅ yes |
+| Pipeline hash manifest | `dvc.lock` | ✅ yes |
 | Remote bytes | wherever the remote is | n/a (remote-side) |

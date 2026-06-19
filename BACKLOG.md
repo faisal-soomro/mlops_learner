@@ -61,6 +61,23 @@ Topical content that's currently buried in a single day's README/walkthrough and
 
 ---
 
+## Days 12-13 — capture real error output
+
+These labs were completed by fixing the broken configuration blind and only running the command once everything was right. The walkthroughs are correct but never captured the actual failure text for each plant — the README diagnosis tables include *guessed* error messages rather than verified ones. Convention going forward (memory: `run-broken-state-first`) is to run the broken command first and let the tool name the plant.
+
+### Acceptance criteria (per day)
+
+- Re-run each plant's broken state, capture the actual error text from `dvc push` / `dvc pull`.
+- Update the day's `walkthrough.md` with the real error cascade.
+- Verify the diagnosis-table entries in the day's README match what the tool actually printed; correct where wrong.
+
+### Items
+
+- **Day 12** — `dvc push` against (a) wrong bucket, (b) wrong port, (c) no default remote. Three distinct error messages to capture.
+- **Day 13** — `dvc pull` with missing credentials. One error message to capture (likely `NoCredentialsError` but unverified).
+
+---
+
 ## Held — extract when more material accrues
 
 Use this section **only** when a topic genuinely doesn't have enough material to write usefully yet — e.g. a single line in one lab. Default Phase-3 behaviour is to extract the note now, from a single day, if there's enough conceptual surface to stand on its own (the existing `notes/makefile.md`, `notes/code-quality.md`, `notes/pre-commit.md`, etc. were all extracted from one day each). "Wait for a second day" is the exception, not the rule.
