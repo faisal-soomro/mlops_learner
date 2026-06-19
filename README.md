@@ -42,7 +42,7 @@ This roadmap is broader than any single one of them — it explicitly covers DVC
 - [x] **Day 12** — Configure DVC Remote Storage
 - [x] **Day 13** — Pull Data from Remote
 - [x] **Day 14** — Build a DVC Pipeline
-- [ ] **Day 15** — Parameterize a DVC Pipeline
+- [x] **Day 15** — Parameterize a DVC Pipeline
 - [ ] **Day 16** — Track Metrics with DVC
 - [ ] **Day 17** — Run DVC Experiments
 - [ ] **Day 18** — Version Data and Models Together

@@ -13,6 +13,7 @@ Cross-cutting DVC concepts that surface across multiple labs in Domain 2 (Days 1
 - [The git/DVC handoff pattern](#the-gitdvc-handoff-pattern)
 - [Don't hand-edit `.dvc/config`](#dont-hand-edit-dvcconfig)
 - [Pipelines — `dvc.yaml` and `dvc.lock`](#pipelines--dvcyaml-and-dvclock)
+- [Parameters — `params.yaml` and the `params:` block](#parameters--paramsyaml-and-the-params-block)
 - [Where each thing lives](#where-each-thing-lives)
 
 ## The mental model
@@ -227,6 +228,59 @@ Useful flags:
 - `dvc repro --downstream <stage>` — run a stage and its descendants
 - `dvc repro --dry` — show what would run without running
 
+### Parameters — `params.yaml` and the `params:` block
+
+`params:` is the third type of dependency a stage can declare (alongside `deps:` for files and `outs:` for produced files). It tracks **named values** read from a config file (default: `params.yaml`).
+
+```yaml
+# params.yaml
+n_estimators: 100
+learning_rate: 0.01
+model:
+  max_depth: 5
+```
+
+```yaml
+# dvc.yaml
+train:
+  cmd: python src/models/train.py
+  deps:
+    - data/processed/train.csv
+    - src/models/train.py
+  params:
+    - n_estimators          # top-level key
+    - model.max_depth        # nested key, dotted path
+  outs:
+    - models/model.pkl
+```
+
+Changing `n_estimators` from 100 to 200 invalidates only the `train` stage (because only `train` lists it). `process_data` and `split_data` hash-match and skip.
+
+### Three things to remember about `params:`
+
+1. **DVC doesn't pass parameters to your script.** The script reads `params.yaml` itself (typically via `yaml.safe_load`). DVC's `params:` block exists *only* so DVC knows when to re-run. If you forget to declare a param the script reads, the script still works — DVC just won't notice when that param changes, so it won't re-run the stage.
+2. **Every name in `params:` must resolve to a key.** Missing keys are an error at `dvc repro` time, before the stage's `cmd` runs. The error message is specific: `Parameters '<name>' are missing from '<file>'.`
+3. **Don't declare params the script doesn't use.** DVC will obediently invalidate the stage when those unused params change — confusing and slow.
+
+### Other syntax forms
+
+```yaml
+# Reference a different param file
+params:
+  - my_params.yaml:
+      - learning_rate
+
+# All params from a file (no whitelist — every key becomes a dep)
+params:
+  - my_params.yaml:
+```
+
+The second form is convenient but coarse — any edit to that file re-triggers the stage. Generally prefer explicit names.
+
+### Why externalising params matters
+
+Hard-coding hyperparameters in `train.py` makes every experiment a code change. `params.yaml` flips that: experiments are config diffs, `dvc.lock` records exactly which param values trained each model, and `git log dvc.lock` becomes a deployment audit trail. This pattern is the seed of the experiment-tracking story (Domain 3 with MLflow) and hyperparameter sweeps (Domain 4 with Optuna/FLAML).
+
 ### `dvc.yaml` vs `.dvc/config` — different mutability models
 
 | File | Hand-edit OK? | CLI helper |
@@ -244,6 +298,7 @@ For pipelines you edit the YAML by hand. Indentation matters (it's YAML); two-sp
 | `output '<path>' does not exist` (after stage ran fine) | `outs` filename mismatch with what the script actually wrote |
 | `dvc dag` shows disconnected stages; `dvc status` clean despite upstream change | Missing `dep` wiring between stages — silent breakage |
 | `Stage '<X>' didn't change, skipping` when you expected a re-run | `dvc.lock` matches; either nothing actually changed, or the changed file isn't in `deps` |
+| `Parameters '<name>' are missing from '<file>'.` | `params:` block names a key that doesn't exist in `params.yaml`; typo or rename |
 
 The third one is the pernicious one: the pipeline produces correct outputs on first run, and only breaks on the second run after upstream data changes. Always check `dvc dag` after defining stages.
 
@@ -259,4 +314,5 @@ The third one is the pernicious one: the pipeline produces correct outputs on fi
 | Per-dir gitignores | `<dir>/.gitignore` | ✅ yes |
 | Pipeline definition | `dvc.yaml` | ✅ yes |
 | Pipeline hash manifest | `dvc.lock` | ✅ yes |
+| Hyperparameters | `params.yaml` | ✅ yes |
 | Remote bytes | wherever the remote is | n/a (remote-side) |
